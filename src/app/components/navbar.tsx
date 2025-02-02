@@ -38,7 +38,7 @@ const Navbar = () => {
   // Handle the search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    setIsDropdownOpen(e.target.value.length > 0); // Show suggestions if there's input
+    setIsDropdownOpen(e.target.value.length > 0); 
   };
 
   // Trigger search function
@@ -68,7 +68,7 @@ const Navbar = () => {
       <div className="w-full px-4   max-w-[1177px] flex items-center justify-between lg:justify-center">
         {/* Logo */}
         <Link href="/" className="hover:text-[#FB2E86]">
-          <div className="text-2xl font-bold text-[#0D0E43] mr-[44px] xl:mr-[88px]">
+          <div className="text-2xl font-bold text-black mr-[44px] xl:mr-[88px]">
             AYZEL IQBAL
           </div>
         </Link>
