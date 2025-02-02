@@ -16,12 +16,13 @@ async function LatestBlog() {
   
   try {
     data = await client.fetch(`
-      *[_type == "blog"  ] {
-  title,
-  excerpt,
-  coverImage,
-  slug
-}
+      *[_type == "blog" ] {
+      title,
+      excerpt,
+      coverImage,
+      body,
+      slug
+    } 
     `)
   } catch (error) {
     console.error('Error fetching blogs:', error)
