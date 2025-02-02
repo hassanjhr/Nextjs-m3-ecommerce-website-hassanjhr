@@ -35,14 +35,14 @@ const TrendingProducts = () => {
               className="border border-gray-300 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex flex-col justify-between h-[350px] sm:h-[300px] md:h-[350px] w-full mx-auto hover:bg-[#F8F9FB]"
             >
               <Link href={`/product/${product.slug.current}`}>
-                <div className="bg-[#F5F5F7] h-[70%] flex items-center justify-center transition-all duration-300 ease-in-out group-hover:translate-y-4">
+                <div className="bg-[#F5F5F7] h-[60%] flex items-center justify-center transition-all duration-300 ease-in-out group-hover:translate-y-4">
                   {product.image && (
                     <Image
                       src={urlForImage(product.image).url()}
                       alt={product.name}
-                      width={270} 
-                      height={180} 
-                      className="max-h-full object-contain p-4 group-hover:scale-110 transition-transform duration-300"
+                      width={270}
+                      height={180}
+                      className="object-cover w-full h-full p-4 group-hover:scale-110 transition-transform duration-300"
                     />
                   )}
                 </div>

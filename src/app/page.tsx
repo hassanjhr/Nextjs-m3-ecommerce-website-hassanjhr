@@ -1,12 +1,10 @@
+import BestSelling from "./components/bestselling";
 import FeaturedProducts from "./components/feature";
 import HeroSection from "./components/hero";
 import LatestBlog from "./components/latestblog";
 import LatestProducts from "./components/latestproduct";
 import ProductFeatures from "./components/productfeatures";
-import ShopexOffer from "./components/shopexoffer";
-
 import SubscribeSection from "./components/subcribesection";
-import TopCategories from "./components/topcategories";
 import TrendingProducts from "./components/trendingproducts";
 
 const Home = async () => {
@@ -15,10 +13,9 @@ const Home = async () => {
       <HeroSection />
       <FeaturedProducts />
       <LatestProducts />
-      <ShopexOffer />
       <ProductFeatures />
       <TrendingProducts />
-      <TopCategories />
+      <BestSelling/>
       <SubscribeSection />
       <LatestBlog /> 
     </div>

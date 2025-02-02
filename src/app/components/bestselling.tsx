@@ -8,7 +8,7 @@ import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
 import Link from "next/link";
 
-const TopCategories = () => {
+const BestSelling = () => {
   const [categories, setCategories] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const TopCategories = () => {
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Section Title */}
         <h2 className="text-center text-2xl md:text-3xl font-semibold text-black mb-8">
-          Top Categories
+        Best-Selling Products
         </h2>
 
         {/* Categories */}
@@ -63,4 +63,4 @@ const TopCategories = () => {
   );
 };
 
-export default TopCategories;
+export default BestSelling;
