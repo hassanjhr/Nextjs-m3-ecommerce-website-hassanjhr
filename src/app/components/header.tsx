@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React from "react";
 import { IoMailOutline, IoCallOutline, IoHeartOutline, IoLogInOutline } from "react-icons/io5";
+import { UserButton, SignInButton, SignedOut, SignedIn } from "@clerk/clerk-react"; // Update the path as necessary
 import { LuShoppingCart } from "react-icons/lu";
 
 const Header = () => {
@@ -45,10 +46,14 @@ const Header = () => {
           </select>
 
           {/* Login */}
-          <Link href="/login"><div className="flex items-center space-x-1 cursor-pointer">
+          {/* <Link href="/login"><div className="flex items-center space-x-1 cursor-pointer">
           <span className=" text-[12px] sm:text-[15px]">Login</span>
             <IoLogInOutline className="text-lg hidden sm:block" />
-          </div></Link>
+          </div></Link> */}
+          
+         
+
+          
 
           {/* Wishlist */}
           <Link href="/wish"><div className=" items-center space-x-1 cursor-pointer  md:flex">
@@ -60,6 +65,13 @@ const Header = () => {
           <Link href="/cart"><div className="p-2 cursor-pointer  md:flex "> <span className="pr-1 hidden lg:block">Cart</span>  
             <LuShoppingCart className="text-lg mt-0 lg:mt-1" />
           </div></Link>
+          
+          <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+        <UserButton />
+        </SignedIn>
         </div>
       </div>
     </div>
