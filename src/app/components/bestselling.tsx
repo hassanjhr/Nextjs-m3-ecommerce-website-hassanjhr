@@ -13,8 +13,13 @@ const BestSelling = () => {
 
   useEffect(() => {
     async function fetchCategories() {
-      const fetchedCategories: Product[] = await client.fetch(lastFour);
-      setCategories(fetchedCategories);
+      try {
+        const fetchedCategories: Product[] = await client.fetch(lastFour);
+        setCategories(fetchedCategories);
+        console.log("Fetched Categories:", fetchedCategories); 
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
     }
     fetchCategories();
   }, []);
@@ -24,7 +29,7 @@ const BestSelling = () => {
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Section Title */}
         <h2 className="text-center text-2xl md:text-3xl font-semibold text-black mb-8">
-        Best-Selling Products
+          Best-Selling Products
         </h2>
 
         {/* Categories */}
@@ -32,22 +37,27 @@ const BestSelling = () => {
           {categories.map((category) => (
             <div key={category._id} className="flex flex-col items-center w-[250px] mx-auto">
               
-              <Link href={`/product/${category.slug.current}`}>
-                <div className="relative flex justify-center items-center rounded-full bg-[#F6F7FB] w-[250px] h-[250px] transition-transform hover:scale-105 border-4 border-gray-300 hover:bg-[#f0e3e9]">
-                  <Image
-                    src={urlForImage(category.image).url()}
-                    alt={category.name}
-                    className="w-[120px] h-[120px] object-contain"
-                    width={120} 
-                    height={120}
-                  />
+             
 
-                  {/* Button (First Item Only) */}
-                  <button className="absolute bottom-6 bg-black text-white px-4 py-2 text-sm rounded-md hover:bg-[#06b856] transition">
-                    View Shop
-                  </button>
-                </div>
-              </Link>
+              {category?.slug?.current && (
+                <Link href={`/product/${category.slug.current}`}>
+                  <div className="relative flex justify-center items-center rounded-full bg-[#F6F7FB] w-[250px] h-[250px] transition-transform hover:scale-105 border-4 border-gray-300 hover:bg-[#f0e3e9]">
+                    <Image
+                      src={urlForImage(category.image).url()}
+                      alt={category.name}
+                      className="w-[120px] h-[120px] object-contain"
+                      width={120}
+                      height={120}
+                    />
+
+                    {/* Button */}
+                    <button className="absolute bottom-6 bg-black text-white px-4 py-2 text-sm rounded-md hover:bg-[#06b856] transition">
+                      View Shop
+                    </button>
+                  </div>
+                </Link>
+              )}
+
               {/* Text Section */}
               <div className="text-center mt-4 w-full">
                 <h3 className="text-black text-lg font-normal">{category.name}</h3>
@@ -57,7 +67,6 @@ const BestSelling = () => {
           ))}
         </div>
 
-        
       </div>
     </div>
   );

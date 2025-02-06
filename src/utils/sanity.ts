@@ -8,7 +8,7 @@ export const client = sanityClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET, 
   apiVersion: '2023-01-01', 
   useCdn: process.env.NODE_ENV === 'production', 
-  token: process.env.SANITY_API_TOKEN, 
+  token: "sk7ZdeRTeQDjLTAeYxpYNsP4lZauwUKglmUmvJkltYuvBUPp1kpd6MvL1GG3vbfpnQiXP8V2xVbrtAae9CuaSeZHtC3ocFELO46SB9MgSfPGOCPJNKwzWaZrPzfwv4Ww2K8LTHJWVOqHRlbNaVKCw3szaVAqy4wpbRysTDGnR2e5m2UcFVQc", 
 });
 
 

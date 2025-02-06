@@ -69,57 +69,164 @@ function CheckOut() {
             return Object.values(errors).every((error) => !error);
             
         }
+        // const handlePlaceOrder = async () => {
+        //     // if (validateForm()) {
+        //     //     localStorage.removeItem("applyDiscount");
+        //     // }
+
+        //     Swal.fire({
+        //         title: 'Are you sure you want to place this order?',
+        //         icon: 'question',
+        //         text: 'This action cannot be undone',
+        //         showCancelButton: true,
+        //         confirmButtonText: `Yes`,
+        //         cancelButtonText: `No`,
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             if (validateForm()) {
+        //                 localStorage.removeItem("applyDiscount");
+        //             }
+        //             Swal.fire('Order placed successfully', '', 'success');
+        //         } else{
+        //             Swal.fire('Please fill in all the required fields', '', 'error');
+        //         }
+        //     });
+
+
+        //     const orderData = {
+        //         _type : "order",
+        //         firstName : formValues.firstName,
+        //         lastName : formValues.lastName,
+        //         email : formValues.email,
+        //         phone : formValues.phone,
+        //         address : formValues.address,
+        //         zipCode : formValues.zipCode,
+        //         city : formValues.city,
+        //         cartItems : cartItems.map((item) => ({
+        //             _type : "reference",
+        //             _ref : item._id,
+        //         })),
+        //         subTotal: subTotal,
+        //         discount : discount,
+        //         total : subTotal - discount,
+        //         orderDate : new Date().toISOString(),
+        //     }
+
+        //     try{
+        //         await client.create(orderData);
+        //         localStorage.removeItem("applyDiscount");
+
+        //     } catch (error) {
+        //         console.error("Error creating order:", error);
+        //     }
+        // }
+
+
+        // const handlePlaceOrder = async () => {
+        //     Swal.fire({
+        //         title: 'Are you sure you want to place this order?',
+        //         icon: 'question',
+        //         text: 'This action cannot be undone',
+        //         showCancelButton: true,
+        //         confirmButtonText: `Yes`,
+        //         cancelButtonText: `No`,
+        //     }).then(async (result) => {
+        //         if (result.isConfirmed) {
+        //             if (validateForm()) {
+        //                 localStorage.removeItem("applyDiscount");
+        //             }
+                    
+        //             const orderData = {
+        //                 _type: "order",
+        //                 firstName: formValues.firstName,
+        //                 lastName: formValues.lastName,
+        //                 email: formValues.email,
+        //                 phone: formValues.phone,
+        //                 address: formValues.address,
+        //                 zipCode: formValues.zipCode,
+        //                 city: formValues.city,
+        //                 cartItems: cartItems.map((item) => ({
+        //                     _type: "reference",
+        //                     _ref: item._id,
+        //                 })),
+        //                 subTotal: subTotal,
+        //                 discount: discount,
+        //                 total: subTotal - discount,
+        //                 orderDate: new Date().toISOString(),
+        //             };
+        
+        //             try {
+        //                 await client.create(orderData);
+        //                 localStorage.removeItem("applyDiscount");
+                        
+        //                 Swal.fire('Order placed successfully', '', 'success').then(() => {
+        //                     window.location.href = "/success"; // Redirect to success page
+        //                 });
+        
+        //             } catch (error) {
+        //                 console.error("Error creating order:", error);
+        //                 Swal.fire('Error placing order', 'Please try again later.', 'error');
+        //             }
+        //         } else {
+        //             Swal.fire('Please fill in all the required fields', '', 'error');
+        //         }
+        //     });
+        // };
+        
+
+
         const handlePlaceOrder = async () => {
-            // if (validateForm()) {
-            //     localStorage.removeItem("applyDiscount");
-            // }
-
+            if (!validateForm()) {
+              Swal.fire('Please fill in all the required fields', '', 'error');
+              return; // Stop execution if validation fails
+            }
+          
             Swal.fire({
-                title: 'Are you sure you want to place this order?',
-                icon: 'question',
-                text: 'This action cannot be undone',
-                showCancelButton: true,
-                confirmButtonText: `Yes`,
-                cancelButtonText: `No`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    if (validateForm()) {
-                        localStorage.removeItem("applyDiscount");
-                    }
-                    Swal.fire('Order placed successfully', '', 'success');
-                } else{
-                    Swal.fire('Please fill in all the required fields', '', 'error');
-                }
-            });
-
-
-            const orderData = {
-                _type : "order",
-                firstName : formValues.firstName,
-                lastName : formValues.lastName,
-                email : formValues.email,
-                phone : formValues.phone,
-                address : formValues.address,
-                zipCode : formValues.zipCode,
-                city : formValues.city,
-                cartItems : cartItems.map((item) => ({
-                    _type : "reference",
-                    _ref : item._id,
+              title: 'Are you sure you want to place this order?',
+              icon: 'question',
+              text: 'This action cannot be undone',
+              showCancelButton: true,
+              confirmButtonText: `Yes`,
+              cancelButtonText: `No`,
+            }).then(async (result) => {
+              if (!result.isConfirmed) {
+                return; // Do nothing if user cancels
+              }
+          
+              const orderData = {
+                _type: "order",
+                firstName: formValues.firstName,
+                lastName: formValues.lastName,
+                email: formValues.email,
+                phone: formValues.phone,
+                address: formValues.address,
+                zipCode: formValues.zipCode,
+                city: formValues.city,
+                cartItems: cartItems.map((item) => ({
+                  _type: "reference",
+                  _ref: item._id,
                 })),
                 subTotal: subTotal,
-                discount : discount,
-                total : subTotal - discount,
-                orderDate : new Date().toISOString(),
-            }
-
-            try{
+                discount: discount,
+                total: subTotal - discount,
+                orderDate: new Date().toISOString(),
+              };
+          
+              try {
                 await client.create(orderData);
                 localStorage.removeItem("applyDiscount");
-
-            } catch (error) {
+          
+                Swal.fire('Order placed successfully', '', 'success').then(() => {
+                  window.location.href = "/success"; // Redirect to success page
+                });
+          
+              } catch (error) {
                 console.error("Error creating order:", error);
-            }
-        }
+                Swal.fire('Error placing order', 'Please try again later.', 'error');
+              }
+            });
+          };
+          
 
 
 

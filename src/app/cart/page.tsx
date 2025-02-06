@@ -80,18 +80,17 @@ const CartPage = () => {
 
   async function handleCheckout(cartItems: Product[]) {
 
-    Swal.fire({
-      title: 'Checkout?',
-      icon: 'question',
-      text: 'Please review your cart before checkout',
-      showCancelButton: true,
-      confirmButtonText: `Yes`,
-      cancelButtonText: `No`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire('Success', 'Please provide payment details', 'success');
-      }
-    });
+    
+  Swal.fire({
+    title: "Checkout?",
+    icon: "question",
+    text: "Please review your cart before proceeding to payment.",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      Swal.fire("Success", "Redirecting to payment...", "success");
 
 
     const response = await fetch('/api/checkout',{
@@ -106,8 +105,9 @@ const CartPage = () => {
 
     const data = await response.json();
     window.location.href = data.url;
-    console.log(data);
-    
+      console.log(data);
+      }
+    });
   }
 
 
