@@ -71,12 +71,46 @@ const CartPage = () => {
       cancelButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire('Success', 'Your Order has been placed', 'success');
+        Swal.fire('Success', 'Please provide payment details', 'success');
         router.push("/checkout")
         setCartItems([]);
       }
     });
   };
+
+  async function handleCheckout(cartItems: Product[]) {
+
+    Swal.fire({
+      title: 'Checkout?',
+      icon: 'question',
+      text: 'Please review your cart before checkout',
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      cancelButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Success', 'Please provide payment details', 'success');
+      }
+    });
+
+
+    const response = await fetch('/api/checkout',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cartItems: cartItems,
+      }),
+    })
+
+    const data = await response.json();
+    window.location.href = data.url;
+    console.log(data);
+    
+  }
+
+
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
@@ -136,12 +170,22 @@ const CartPage = () => {
             <h3 className="text-lg font-bold">Total: ${calculatedTotal()}</h3>
           </div>
 
+          <div className='grid justify-center gap-2'>
           <button
             onClick={handleProceed}
             className='bg-gradient-to-r from-black to-[#FB2E86] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg hover:scale-110 transition-transform duration-300 ease-in-out mt-4'
           >
-            Proceed to Checkout
+            Cash on Delivery
           </button>
+
+          <button
+            onClick={() => handleCheckout(cartItems)}
+            className=' bg-gradient-to-r from-black to-[#FB2E86] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg hover:scale-110 transition-transform duration-300 ease-in-out mt-4'
+          >
+            Payment through card
+          </button>
+          </div>
+
         </div>
       )}
     </div>

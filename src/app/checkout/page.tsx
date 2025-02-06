@@ -7,6 +7,8 @@ import Link from 'next/link'
 import  Image from 'next/image'
 import { urlForImage } from '@/sanity/lib/image'
 import { CgChevronRight } from 'react-icons/cg'
+import { client } from '@/utils/sanity'
+import Swal from 'sweetalert2'
 
 function CheckOut() {
 
@@ -67,9 +69,55 @@ function CheckOut() {
             return Object.values(errors).every((error) => !error);
             
         }
-        const handlePlaceOrder = () => {
-            if (validateForm()) {
+        const handlePlaceOrder = async () => {
+            // if (validateForm()) {
+            //     localStorage.removeItem("applyDiscount");
+            // }
+
+            Swal.fire({
+                title: 'Are you sure you want to place this order?',
+                icon: 'question',
+                text: 'This action cannot be undone',
+                showCancelButton: true,
+                confirmButtonText: `Yes`,
+                cancelButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (validateForm()) {
+                        localStorage.removeItem("applyDiscount");
+                    }
+                    Swal.fire('Order placed successfully', '', 'success');
+                } else{
+                    Swal.fire('Please fill in all the required fields', '', 'error');
+                }
+            });
+
+
+            const orderData = {
+                _type : "order",
+                firstName : formValues.firstName,
+                lastName : formValues.lastName,
+                email : formValues.email,
+                phone : formValues.phone,
+                address : formValues.address,
+                zipCode : formValues.zipCode,
+                city : formValues.city,
+                cartItems : cartItems.map((item) => ({
+                    _type : "reference",
+                    _ref : item._id,
+                })),
+                subTotal: subTotal,
+                discount : discount,
+                total : subTotal - discount,
+                orderDate : new Date().toISOString(),
+            }
+
+            try{
+                await client.create(orderData);
                 localStorage.removeItem("applyDiscount");
+
+            } catch (error) {
+                console.error("Error creating order:", error);
             }
         }
 
